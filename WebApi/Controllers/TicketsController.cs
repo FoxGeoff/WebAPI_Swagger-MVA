@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         // GET: api/Tickets/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTickets")]
         public async Task<IActionResult> GetTicket([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
 
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket([FromRoute] int id, [FromBody] TicketItem ticketItem)
+        public async Task<IActionResult> UpdateTicket([FromRoute] int id, [FromBody] TicketItem ticketItem)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace WebApi.Controllers
 
         // POST: api/Tickets
         [HttpPost]
-        public async Task<IActionResult> PostTicket([FromBody] TicketItem ticketItem)
+        public async Task<IActionResult> CreateTicket([FromBody] TicketItem ticketItem)
         {
             if (!ModelState.IsValid)
             {
@@ -95,7 +95,9 @@ namespace WebApi.Controllers
             _context.TicketItems.Add(ticketItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTicketItem", new { id = ticketItem.Id }, ticketItem);
+            // return "Tickets/" + ticketItem.Id
+            // return CreatedAtRoute("GetTickets", new { id = ticketItem.Id }, ticketItem);
+            return CreatedAtAction("GetTickets", new { id = ticketItem.Id }, ticketItem);
         }
 
         // DELETE: api/Tickets/5
@@ -125,3 +127,9 @@ namespace WebApi.Controllers
         }
     }
 }
+
+/*
+ * CRUD
+ * Create Read Update Delete
+ * Post   Get  Put    Delete
+ */
